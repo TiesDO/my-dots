@@ -32,6 +32,13 @@ return require("packer").startup(function(use)
     -- lsp
     use { 'neovim/nvim-lspconfig' }
 
+    -- auto complete
+    use { 'hrsh7th/nvim-cmp' }
+    use { 'hrsh7th/cmp-nvim-lsp' }
+
+    use { "L3MON4D3/LuaSnip" }
+    use { 'saadparwaiz1/cmp_luasnip' }
+
     -- automatic lsp install / config
     use { "williamboman/mason.nvim" }
     use { "williamboman/mason-lspconfig.nvim" }
