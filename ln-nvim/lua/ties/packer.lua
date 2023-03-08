@@ -14,7 +14,7 @@ return require("packer").startup(function(use)
     -- syntax highlighting
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
+        run = { 'TSUpdate' }
     }
 
     -- Tree view
@@ -26,7 +26,7 @@ return require("packer").startup(function(use)
         tag = 'nightly'
     }
 
-    -- buffer line
+    -- lua line
     use { 'nvim-lualine/lualine.nvim' }
 
     -- lsp
@@ -45,6 +45,8 @@ return require("packer").startup(function(use)
 
     -- dap
     use { 'mfussenegger/nvim-dap' }
+    use { 'jay-babu/mason-nvim-dap.nvim' }
+    use { 'theHamsta/nvim-dap-virtual-text' }
 
     -- formatting and linting
     use { 'jose-elias-alvarez/null-ls.nvim' }

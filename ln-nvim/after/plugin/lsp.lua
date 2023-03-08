@@ -1,6 +1,8 @@
 -- setup mason
-require 'mason'.setup()
-require 'mason-lspconfig'.setup()
+require 'mason'.setup({
+})
+require 'mason-lspconfig'.setup({
+})
 
 -- always there
 local opts = { noremap = true, silent = true }
@@ -28,11 +30,63 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
+-- CMP setup
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
+local cmp = require 'cmp'
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+local luasnip = require 'luasnip'
+
+-- luasnip remaps
+
+vim.keymap.set('i', '<C-n>', function() luasnip.jump(1) end, { noremap = true, silent = true })
+vim.keymap.set('s', '<C-n>', function() luasnip.jump(1) end, { noremap = true, silent = true })
+vim.keymap.set('i', '<C-p>', function() luasnip.jump(-1) end, { noremap = true, silent = true })
+vim.keymap.set('s', '<C-p>', function() luasnip.jump(-1) end, { noremap = true, silent = true })
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end
+    },
+    mapping = {
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-j>'] = cmp.mapping.select_next_item({
+            behavior = cmp.SelectBehavior.Select
+        }),
+            ['<C-k>'] = cmp.mapping.select_prev_item({
+            behavior = cmp.SelectBehavior.Select
+        }),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<C-i>'] = cmp.mapping.confirm {
+            select = true,
+            behavior = cmp.ConfirmBehavior.Insert
+        }
+    },
+    sources = cmp.config.sources(
+        {
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' }
+        }, {
+            { name = 'buffer', keyword_length = 5 }
+        }),
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered()
+    },
+    experimental = {
+        ghost_text = { hl_group = 'comment'}
+    }
+})
+
+local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
+
 require('mason-lspconfig').setup_handlers {
     function(server_name)
-        print(server_name)
         require('lspconfig')[server_name].setup {
-            on_attach = on_attach
+            on_attach = on_attach,
+            capabilities = capabilities
         }
     end
 }
@@ -54,12 +108,30 @@ require('mason-null-ls').setup({
 
 require 'mason-null-ls'.setup_handlers {
     function(source_name, methods)
-        -- all sources with no handler get passed here
-
-        -- To keep the original functionality of `automatic_setup = true`,
-        -- please add the below.
         require("mason-null-ls.automatic_setup")(source_name, methods)
     end,
 }
 
 require 'null-ls'.setup()
+
+-- Dap config
+
+require ('mason-nvim-dap').setup({
+    automatic_setup = true
+})
+
+require 'mason-nvim-dap'.setup_handlers {
+    function (source_name)
+        require('mason-nvim-dap.automatic_setup')(source_name)
+    end
+}
+
+local dap = require 'dap'
+
+vim.keymap.set('n', '<F5>', function() dap.continue() end)
+vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
+
+require 'nvim-dap-virtual-text'.setup()
