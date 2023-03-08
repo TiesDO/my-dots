@@ -2,7 +2,6 @@ require 'lualine'.setup()
 
 -- empty setup using defaults
 require("nvim-tree").setup({
-    prefer_startup_root = true,
     renderer = {
     icons = {
       show = {
