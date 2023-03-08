@@ -52,6 +52,10 @@ return require("packer").startup(function(use)
     use { 'jose-elias-alvarez/null-ls.nvim' }
     use { 'jay-babu/mason-null-ls.nvim' }
 
+    -- Terminal
+    
+    use {"akinsho/toggleterm.nvim", tag = '*' }
+
     -- UTIL
     use { 'terrortylor/nvim-comment' }
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
