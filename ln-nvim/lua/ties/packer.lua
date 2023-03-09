@@ -39,6 +39,9 @@ return require("packer").startup(function(use)
     use { "L3MON4D3/LuaSnip" }
     use { 'saadparwaiz1/cmp_luasnip' }
 
+    -- sources
+    use { 'hrsh7th/cmp-path' }
+
     -- automatic lsp install / config
     use { "williamboman/mason.nvim" }
     use { "williamboman/mason-lspconfig.nvim" }
@@ -63,6 +66,9 @@ return require("packer").startup(function(use)
     use { 'folke/todo-comments.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { 'manzeloth/live-server' }
+
+    -- Scratchpad
+    use { 'metakirby5/codi.vim' }
 
     -- THEME
     use({

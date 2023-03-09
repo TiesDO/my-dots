@@ -1,6 +1,6 @@
-require 'lualine'.setup()
 
--- empty setup using defaults
+-- NOTE: NvimTree configuration
+
 require("nvim-tree").setup({
     renderer = {
     icons = {
@@ -34,8 +34,7 @@ require("nvim-tree").setup({
   }
 })
 
-vim.keymap.set('n', '<leader>p', require'nvim-tree.api'.tree.toggle)
-
+-- open Treeview when vim is opened with dir as argument
 local function open_nvim_tree(data)
   local directory = vim.fn.isdirectory(data.file) == 1
 
@@ -49,3 +48,5 @@ local function open_nvim_tree(data)
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+vim.keymap.set('n', '<leader>p', require'nvim-tree.api'.tree.toggle, { desc = "Toggle treeview" })

@@ -1,3 +1,5 @@
+
+-- NOTE: Toggleterm configuration
 local term = require 'toggleterm'
 
 term.setup({
@@ -11,10 +13,11 @@ term.setup({
     end,
 })
 
--- vim.keymap.set('n', '<leader>tf', function() vim.cmd 'ToggleTerm direction=float' end)
-vim.keymap.set('n', '<leader>tf', [[<Cmd>ToggleTerm direction=float<CR>]])
-vim.keymap.set('n', '<leader>tv', function() vim.cmd 'ToggleTerm direction=vertical' end)
-vim.keymap.set('n', '<leader>th', function() vim.cmd 'ToggleTerm direction=horizontal' end)
+-- keymaps
+
+vim.keymap.set('n', '<leader>tf', function() vim.cmd 'ToggleTerm direction=float' end, { desc = "Open floating terminal"})
+vim.keymap.set('n', '<leader>tv', function() vim.cmd 'ToggleTerm direction=vertical' end, { desc = "Open terminal vertically"})
+vim.keymap.set('n', '<leader>th', function() vim.cmd 'ToggleTerm direction=horizontal' end, { desc = "Open terminal horizontally"})
 
 vim.keymap.set('t', '<C-\\>', [[<C-\><C-n>]])
 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
