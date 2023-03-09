@@ -62,6 +62,7 @@ return require("packer").startup(function(use)
     use { 'folke/which-key.nvim' }
     use { 'folke/todo-comments.nvim' }
     use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use { 'manzeloth/live-server' }
 
     -- THEME
     use({
